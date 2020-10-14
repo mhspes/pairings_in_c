@@ -60,7 +60,12 @@ file(GLOB PairingLibSources "src/*.c" "src/base/std/bigint/*.c" "src/base/std/fp
 
 set(ArchLibSources "")
 if(ASM_ARCH_DIR)
-  file(GLOB_RECURSE ArchLibSources "src/arch/${ASM_ARCH_DIR}/*.S")
+  # m-33 optimization
+  if(${ARCHITECTURE} MATCHES "ARCH_CORTEXM33")
+    file(GLOB_RECURSE ArchLibSources "src/arch/${ASM_ARCH_DIR}/*.S" "src/arch/${ASM_ARCH_m33_DIR}/*.S")
+  else()
+    file(GLOB_RECURSE ArchLibSources "src/arch/${ASM_ARCH_DIR}/*.S")
+  endif()  
 endif()
 
 set(LIBNAME bipair_in_c-${ARCHITECTURE})
