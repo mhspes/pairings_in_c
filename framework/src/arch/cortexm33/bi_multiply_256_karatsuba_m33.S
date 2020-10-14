@@ -32,7 +32,7 @@
 ** Note: Optimized version for Cortex-M33, mulacc macro modified
 ** for 64-bit multiply instruction
 **
-****************************************************************************/
+*****************************************************************************
 **
 ** Note: Optimized version for Cortex-M33, mulacc macro modified
 ** for 64-bit multiply instruction

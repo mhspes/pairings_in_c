@@ -29,7 +29,7 @@
 ** You should have received a copy of the GNU General Public License
 ** along with this software. If not, see http://www.gnu.org/licenses/.
 **
-****************************************************************************/
+*****************************************************************************
 **
 ** Note: Optimized version for Cortex-M33, 32-bit mulacc macro replaced with
 ** 64-bit multiply instruction

@@ -63,7 +63,7 @@ set_source_files_properties( "${SDK_RAW_METAL}/modules/nrfx/mdk/gcc_startup_nrf9
 
 # extend the compile flags with parameters to obtain small code size
 set(TOOLCHAIN_ASM_FLAGS	   "-std=c99 -mcpu=${CPU} -mthumb -ffunction-sections -fdata-sections")
-set(TOOLCHAIN_C_FLAGS	   "-std=c99 -mcpu=${CPU} -mthumb -ffunction-sections -fdata-sections")
+set(TOOLCHAIN_C_FLAGS	   "-std=c99 -O3 -mcpu=${CPU} -mthumb -ffunction-sections -fdata-sections")
 set(TOOLCHAIN_CXX_FLAGS	   "-std=c99 -mcpu=${CPU} -mthumb -ffunction-sections -fdata-sections")
 set(TOOLCHAIN_LINKER_FLAGS "-Wl,-static -u _sbrk -Wl,-gc-sections -Wl,-lnosys	    \
 			    -Wl,-L${SDK_RAW_METAL}/modules/nrfx/mdk		    \
