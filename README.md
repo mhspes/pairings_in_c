@@ -12,7 +12,7 @@ By default, the current setup runs the cycle/cache miss benchmarks for the o-ate
 CMSIS_5: https://github.com/ARM-software/CMSIS_5
 nRF9160_SDK: https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download#infotabs
 
-
+## 
 This repository contains a C library for pairing-based cryptography which was part of results published at CHES 2014 [4]. It supports bilinear pairings based on 160-bit and 254-bit Barreto-Naehrig elliptic curves.
 
 ## Directory Structure
