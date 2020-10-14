@@ -7,7 +7,7 @@
 This version is forked from the original pairings_in_c project, modified to support Cortex-m33 (optimized 64-bit multiplication).
 Contains linker scripts and cmake files for bare-metal implementation for nRF9160. Requires ARM CMSIS_5 (Cortex Microcontroller Software Interface Standard) and nRF SDK (see links below).
 
-For building on nRF9160, modify SDK and CMSIS paths and versions on the nrf9160-app-init-build script.
+By default, the current setup runs the cycle/cache miss benchmarks for the o-ate pairing and different subfunctions (curve point, field extension arithmetic, etc). For building and benchmarking on nRF9160, modify SDK and CMSIS paths and versions on the nrf9160-app-init-build script. See framework/src/arch/nrf9160/board_init.c. Cache profiling is on by default, the flags locate in the corresponding board_init.c and /framework/include/util.h. 
 
 CMSIS_5: https://github.com/ARM-software/CMSIS_5
 nRF9160_SDK: https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download#infotabs
