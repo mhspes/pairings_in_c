@@ -113,7 +113,8 @@
 #define fp_to_montgomery(res, a)	fp_to_montgomery_std(res, a);
 #define fp_from_montgomery(res, a)	fp_from_montgomery_std(res, a);
 
-#if ARCHITECTURE==ARCH_CORTEXM0
+#if (ARCHITECTURE==ARCH_CORTEXM0) || \
+    (ARCHITECTURE==ARCH_CORTEXM33)
 #include "arch/cortexm0/fp.h"
 #endif
 

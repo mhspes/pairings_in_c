@@ -17,7 +17,7 @@ set(CMAKE_C_STANDARD     99)
 set(CMAKE_C_EXTENSIONS   ON)
 
 # set default Architecture
-set(ARCHITECTURE "ARCH_X86" CACHE STRING "ARCH_X86, ARCH_X86_64, ARCH_CORTEXM0, ARCH_CORTEXA9, ARCH_CORTEXA11,...")
+set(ARCHITECTURE "ARCH_X86" CACHE STRING "ARCH_X86, ARCH_X86_64, ARCH_CORTEXM0, ARCH_CORTEXM33, ARCH_CORTEXA9, ARCH_CORTEXA11,...")
 
 set(BENCHMARK_SRC "BM_CYCLE" CACHE STRING "BM_CYCLE, BM_CLOCK")
 
@@ -64,19 +64,40 @@ if(ASM_ARCH_DIR)
 endif()
 
 set(LIBNAME bipair_in_c-${ARCHITECTURE})
-add_library(${LIBNAME} ${PairingLibSources} ${ArchLibSources})
+add_library(${LIBNAME} ${PairingLibSources} ${ArchLibSources} ${BoardLibSources})
 target_compile_definitions(${LIBNAME} PUBLIC ARCHITECTURE=${ARCHITECTURE} BENCHMARK_SRC=${BENCHMARK_SRC})
 target_include_directories(${LIBNAME} PUBLIC include)
 
 install_lib(TARGETS ${LIBNAME} DESTINATION lib${LIBDIR_INSTALL_SUFFIX})
+
+function(disassemble executable)
+  add_custom_command(
+	TARGET	${executable}
+	POST_BUILD
+        COMMAND ${GCC_ARM_TOOLCHAIN_BIN}/arm-none-eabi-objdump -d ${executable} > ${executable}.dis
+    )
+endfunction()
+
+function(intelhex executable)
+  add_custom_command(
+	TARGET	${executable}
+	POST_BUILD
+        COMMAND ${GCC_ARM_TOOLCHAIN_BIN}/arm-none-eabi-objcopy --input-target elf32-little --output-target ihex ${executable} ${executable}.hex
+    )
+endfunction()
 
 # build the demos
 # -----------------------------------------
 file(GLOB DemoSources "demo/*.c")
 foreach( sourceFile ${DemoSources} )
   get_filename_component(exeName ${sourceFile} NAME_WE)
-  add_executable(${exeName} EXCLUDE_FROM_ALL ${sourceFile} ${ARCHITECTURE_C_SOURCES})
+  add_executable(${exeName} EXCLUDE_FROM_ALL ${sourceFile} ${ARCHITECTURE_C_SOURCES} ${BOARD_SOURCES} )
   target_link_libraries(${exeName} ${LIBNAME})
+  add_custom_command(
+	TARGET	${exeName}
+	POST_BUILD
+        COMMAND ${GCC_ARM_TOOLCHAIN_BIN}/arm-none-eabi-objdump -d ${exeName} > ${exeName}.dis
+    )
   add_to_suite(${exeName})
   add_test(NAME ${exeName} COMMAND $<TARGET_FILE:${exeName}>)
 endforeach()
@@ -86,11 +107,13 @@ endforeach()
 FILE(GLOB BenchSources "benchmark/*.c")
 foreach( sourceFile ${BenchSources} )
   get_filename_component(exeName ${sourceFile} NAME_WE)
-  add_executable( ${exeName} EXCLUDE_FROM_ALL ${sourceFile} ${ARCHITECTURE_C_SOURCES} )
+  add_executable( ${exeName} EXCLUDE_FROM_ALL ${sourceFile} ${ARCHITECTURE_C_SOURCES} ${BOARD_SOURCES} )
   if(BENCHMARK_SRC STREQUAL BM_CLOCK) 
     target_link_libraries(${exeName} ${LIBNAME} rt)
   else()
     target_link_libraries(${exeName} ${LIBNAME})
+    disassemble( ${exeName} )
+    intelhex( ${exeName} )
   endif()
 endforeach()
 
@@ -99,9 +122,10 @@ endforeach()
 FILE(GLOB TestSources "test/*.c")
 foreach( sourceFile ${TestSources} )
   get_filename_component(exeName ${sourceFile} NAME_WE)
-  add_executable( ${exeName} EXCLUDE_FROM_ALL ${sourceFile} ${ARCHITECTURE_C_SOURCES})
+  add_executable( ${exeName} EXCLUDE_FROM_ALL ${sourceFile} ${ARCHITECTURE_C_SOURCES} ${BOARD_SOURCES} )
   target_link_libraries(${exeName} ${LIBNAME})
   add_to_suite(${exeName})
+  disassemble( ${exeName} )
   add_test(NAME ${exeName} COMMAND $<TARGET_FILE:${exeName}>)
 endforeach()
 

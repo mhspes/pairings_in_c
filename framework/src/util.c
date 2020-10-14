@@ -50,6 +50,15 @@ const char hex_lookup[] = {'0', '1', '2', '3',
 #include <stdio.h>
 #endif
 
+#if (ARCHITECTURE==ARCH_CORTEXM33)
+#include <inttypes.h>
+#include "nrf.h"
+#include "core_cm33.h"
+#endif
+
+//void icache_reset_misses();
+//unsigned int icache_get_misses();
+
 /**
  * Prints a message.
  * @param msg the message to be printed
@@ -58,7 +67,8 @@ void print(const char *msg) {
 #if (ARCHITECTURE == ARCH_X86 || ARCHITECTURE == ARCH_X86_64)
 	printf("%s", msg);
 	fflush(stdout);
-#elif (ARCHITECTURE == ARCH_CORTEXM0)
+#endif
+#if (ARCHITECTURE == ARCH_CORTEXM0)
 	byte *uart = (byte*) UART_BASE;
 	byte *txbuf = uart + TX_OFFSET;
 	volatile unsigned short *tctl = (unsigned short *) (uart + TCTL_OFFSET);
@@ -70,6 +80,13 @@ void print(const char *msg) {
 			;  // wait for uart to be ready
 		*txbuf = *(msg + i);
 	}
+#endif
+#if (ARCHITECTURE == ARCH_CORTEXM33)
+    while(*msg) {
+      void uarte_putc(char);
+      uarte_putc(*msg);
+      msg++;
+    }
 #endif
 }
 
@@ -178,6 +195,18 @@ unsigned long long get_cycles() {
 	// very simple extension to the cortex-m0 simulator that returns the actual cycle
 	unsigned long *cycle_ptr = (unsigned long*) CYCLE_COUNT_ADDR;
 	return *cycle_ptr;
+#elif (ARCHITECTURE==ARCH_CORTEXM33)
+    return DWT->CYCCNT;
 #endif
 
 }
+
+#if CACHE_PROFILING
+// functions in board_init.c
+void util_icache_reset_misses(){
+	icache_reset_misses();
+}
+unsigned int util_icache_get_misses(){
+	return icache_get_misses();
+}
+#endif

@@ -20,6 +20,8 @@ set(ARCHITECTURE "ARCH_CORTEXM0"
 
 # set the directory name for the assembler optimizations
 set(ASM_ARCH_DIR "cortexm0/asm" CACHE STRING "Name of the folder with the ASM optimizations." FORCE)
+# Optimizations for m-33
+set(ASM_ARCH_m33_DIR "cortexm33" CACHE STRING "Name of the folder with the m33 ASM optimizations." FORCE)
 
 # startup code for cortex m0
 set(ARCHITECTURE_C_SOURCES    "${PROJECT_SOURCE_DIR}/src/arch/cortexm0/startup.c")

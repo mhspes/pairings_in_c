@@ -38,5 +38,6 @@
 #define ARCH_X86 1
 #define ARCH_X86_64 2
 #define ARCH_CORTEXM0 3
+#define ARCH_CORTEXM33  4
 
 #endif /* ARCH_H_ */

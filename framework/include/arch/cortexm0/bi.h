@@ -134,9 +134,17 @@ void bi_subtract_dbllen_cm0_256(word_t * res, const word_t *a, const word_t *b);
   #define bi_square(res, a) 			bi_multiply_cm0_256(res, a, a)
   #define bi_multiply(res, a, b) 		bi_multiply_cm0_256(res, a, b)
  #else
-  #define bi_square(res, a) 			bi_multiply_cm0_var(res, a, a, BI_WORDS, BI_WORDS)
+  #if (ARCHITECTURE==ARCH_CORTEXM33) // Optimized mul for M-33
+   #define bi_square(res, a) 			bi_multiply_cm33_var(res, a, a, BI_WORDS, BI_WORDS)
+  #else
+   #define bi_square(res, a) 			bi_multiply_cm0_var(res, a, a, BI_WORDS, BI_WORDS)
+  #endif
   #ifdef LAZY_REDUCTION
+   #if (ARCHITECTURE==ARCH_CORTEXM33)
+    #define bi_multiply(res, a, b) 		bi_multiply_cm33_256_karatsuba(res, a, b)
+   #else
     #define bi_multiply(res, a, b) 		bi_multiply_cm0_256_karatsuba(res, a, b)
+   #endif
   #else
     #define bi_multiply(res, a, b) 		bi_multiply_cm0_var(res, a, b, BI_WORDS, BI_WORDS)
   #endif

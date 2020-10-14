@@ -44,12 +44,22 @@
 #include "ibe/bbkem.h"
 #include "util.h"
 
+#if CACHE_PROFILING
 #define benchmark_call(msg, function)						\
 	benchmark_start();														\
 	function;																      \
 	benchmark_stop();														  \
 	benchmark_compute_single();										\
 	benchmark_print(msg);													\
+	icache_miss_print(); // print icache misses, if available
+#else
+#define benchmark_call(msg, function)						\
+	benchmark_start();														\
+	function;																      \
+	benchmark_stop();														  \
+	benchmark_compute_single();										\
+	benchmark_print(msg);
+#endif
 
 #if PRECISION == 256
 void benchmark_bi() {
@@ -58,7 +68,8 @@ void benchmark_bi() {
 	static const bigint_t var_a = { 0xCE6DAB5C, 0x2587CAB3, 0xA009F826,
 			0xB0000145, 0xEF2FB831, 0x411B3B01, 0x26CA1422, 0xFABBC18D };
 	static const bigint_t var_b = { 0x20055C46, 0x1C4826CA, 0xF70F7773,
-			0xD7EFEA0D, 0x243BF18B, 0xB9F4580D, 0x5C61EC83, 0x1E138820 };
+			0xD7EFEA0D, 0x243BF18B, 0xB9F4580D, 0x5C61EC83, 0x1E138820 };		
+			
 
 	word_t var_res[2*BI_WORDS];
 

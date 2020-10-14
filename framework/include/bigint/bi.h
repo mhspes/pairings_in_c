@@ -90,7 +90,8 @@ extern const bigint_t bi_zero;
 #define bi_negate_var(res, a, length)			bi_negate_var_std(res, a, length)
 #define bi_negate(res, a)						bi_negate_var_std(res, a, BI_WORDS)
 
-#if ARCHITECTURE==ARCH_CORTEXM0
+#if (ARCHITECTURE==ARCH_CORTEXM0) || \
+    (ARCHITECTURE==ARCH_CORTEXM33)
 #include "arch/cortexm0/bi.h"
 #endif
 

@@ -37,6 +37,8 @@
 
 #include "types.h"
 
+#define CACHE_PROFILING 1
+
 void print(const char *msg);
 void print_value(const word_t *value, length_t len);
 void print_bytes(const byte *value, length_t len);
@@ -44,6 +46,8 @@ void print_bytes(const byte *value, length_t len);
 int compare_bytes(const byte *a, const byte* b, length_t len);
 
 unsigned long long get_cycles(void);
+unsigned int util_icache_get_misses(void);
+void util_icache_reset_misses(void);
 
 /** Print a bigint_t variable. */
 #define PRINT_BIGINT(TAG, num) \

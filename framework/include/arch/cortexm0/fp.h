@@ -51,6 +51,7 @@ void fp_hlv_cm0_256(fp_t res, const fp_t a, const bigint_t modulo);
 void fp_rdc_monty_cm0_256(fp_t res, const word_t* t, const bigint_t modulo, word_t n0);
 void fp_rdc_monty_cm0_mulacc_256(fp_t res, const word_t* t, const bigint_t modulo, word_t n0);
 void fp_rdc_monty_cm0_bn254(fp_t res, const word_t* t, const bigint_t modulo, word_t n0);
+void fp_rdc_monty_cm33_bn254(fp_t res, const word_t* t, const bigint_t modulo, word_t n0);
 
 void fp_add_lazy_cm0_bn254(fp_t res, const fp_t a, const fp_t b, const bigint_t modulo, const bigint_t multMod);
 void fp_subtract_lazy_cm0_bn254(fp_t res, const fp_t a, const fp_t b, const bigint_t modulo, const bigint_t multMod);
@@ -180,7 +181,11 @@ void fp_rdc_cm0_bn254(fp_t a, const bigint_t modulo);
  #if (BNCURVE == BN256)
   #define fp_rdc_monty(res, t, mod, n0)	fp_rdc_monty_cm0_256(res, t, mod, n0)
  #elif (BNCURVE == BN254)
-  #define fp_rdc_monty(res, t, mod, n0)	fp_rdc_monty_cm0_bn254(res, t, mod, n0)
+  #if (ARCHITECTURE==ARCH_CORTEXM33) // Optimized mul for M-33
+   #define fp_rdc_monty(res, t, mod, n0)	fp_rdc_monty_cm33_bn254(res, t, mod, n0)
+  #else
+   #define fp_rdc_monty(res, t, mod, n0)	fp_rdc_monty_cm0_bn254(res, t, mod, n0)	
+  #endif
  #endif
 #endif
 
