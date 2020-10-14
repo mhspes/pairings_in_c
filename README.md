@@ -3,6 +3,16 @@
 [![Build Status](https://travis-ci.org/IAIK/pairings_in_c.svg?branch=develop)](https://travis-ci.org/IAIK/pairings_in_c)
 [![codecov](https://codecov.io/gh/IAIK/pairings_in_c/branch/develop/graph/badge.svg)](https://codecov.io/gh/IAIK/pairings_in_c)
 
+## NOTE!
+This version is forked from the original pairings_in_c project, modified to support Cortex-m33 (optimized 64-bit multiplication).
+Contains linker scripts and cmake files for bare-metal implementation for nRF9160. Requires ARM CMSIS_5 (Cortex Microcontroller Software Interface Standard) and nRF SDK (see links below).
+
+For building on nRF9160, modify SDK and CMSIS paths and versions on the nrf9160-app-init-build script.
+
+CMSIS_5: https://github.com/ARM-software/CMSIS_5
+nRF9160_SDK: https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download#infotabs
+
+
 This repository contains a C library for pairing-based cryptography which was part of results published at CHES 2014 [4]. It supports bilinear pairings based on 160-bit and 254-bit Barreto-Naehrig elliptic curves.
 
 ## Directory Structure
