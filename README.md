@@ -1,5 +1,5 @@
 
-## NOTE!
+## NOTE
 This version is forked from the original pairings_in_c project, modified to support Cortex-m33 (optimized 64-bit multiplication) and to be implemented on nRF9160 development kit, but easily modified for other boards. The project contains the necessary linker scripts and makefiles for bare-metal implementation for nRF9160. Requires ARM CMSIS_5 (Cortex Microcontroller Software Interface Standard) and nRF SDK (see links below) as accompaniment when building (see links below). Requires also the nRF Commandline tools for flashing and ARM GNU toolchain. The project has been built and tested in Unix, with nRF5 SDK v 17.0.2, and ARM GNU toolchain 9-2020-q2.
 
 By default, the current setup runs the cycle/cache miss benchmarks for the optimal ate pairing and different subfunctions (curve point, field extension arithmetic, etc). Cache profiling is on by default, the flags locate in framework/src/arch/nrf9160/board_init.c and /framework/include/util.h. 
