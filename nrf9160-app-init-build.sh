@@ -2,27 +2,28 @@
 
 set -e
 
-GCC_ARM_TOOLCHAIN_ID=gcc-arm-none-eabi-9-2019-q4-major
-SDK_ID=nRF5SDK160098a08e2
+READLINK=readlink
 
-if [[ `uname` == "Darwin" ]]; then
-    GCC_ARM_TOOLCHAIN_BASE=/Volumes/Untitled/opt/GnuArmEmb
-    SDK_BASE=/Volumes/Untitled/SDK
-    READLINK=greadlink
-else
-    GCC_ARM_TOOLCHAIN_BASE=/windows/opt/GnuArmEmbLinux
-    SDK_BASE=/windows/SDK
-    READLINK=readlink
-fi
+# Edit the paths and versions
+# Note, the SDK and CMSIS are assumed to be in the same base directory as the pairing repository.
+
+# GCC toolchain and SDK versions
+GCC_ARM_TOOLCHAIN_ID=gcc-arm-none-eabi-9-2020-q2-update
+SDK_ID=nRF5SDK17009d13099
+
+# GCC toolchain and SDK BASE directories
+GCC_ARM_TOOLCHAIN_BASE=/usr/local
+SDK_BASE=~/files/project_base_directory
+
+# CMSIS path, modify if needed
+CMSIS_DIR=${SDK_BASE}/CMSIS_5/CMSIS
 
 export GCC_ARM_TOOLCHAIN_DIR=${GCC_ARM_TOOLCHAIN_BASE}/${GCC_ARM_TOOLCHAIN_ID}
 export GCC_ARM_TOOLCHAIN_BIN=${GCC_ARM_TOOLCHAIN_DIR}/bin
 
 BASE_DIR=`dirname $0`
 BASE_DIR=`${READLINK} -f ${BASE_DIR}`
-
 BUILD_DIR=${BASE_DIR}/build
-CMSIS_DIR=${SDK_BASE}/ncs/modules/hal/cmsis/CMSIS
 
 if [[ -n ${CLEAN} ]]; then
 
