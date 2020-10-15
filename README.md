@@ -1,18 +1,24 @@
+
+## NOTE!
+This version is forked from the original pairings_in_c project, modified to support Cortex-m33 (optimized 64-bit multiplication) and to be implemented on nRF9160 development kit, but easily modified for other boards. The project contains the necessary linker scripts and makefiles for bare-metal implementation for nRF9160. Requires ARM CMSIS_5 (Cortex Microcontroller Software Interface Standard) and nRF SDK (see links below) as accompaniment when building (see links below). Requires also the nRF Commandline tools for flashing and ARM GNU toolchain. The project has been built and tested in Unix.
+
+By default, the current setup runs the cycle/cache miss benchmarks for the optimal ate pairing and different subfunctions (curve point, field extension arithmetic, etc). Cache profiling is on by default, the flags locate in framework/src/arch/nrf9160/board_init.c and /framework/include/util.h. 
+
+Building: use the bash script nrf9160-app-init-build. Modify SDK, CMSIS and GCC ARM toolchain versions and paths on the script.
+Flashing: nrfjprog --program build/bench.hex -f NRF91  --sectorerase
+Traces can be read from any terminal, the used baud rate is 115200 and serial line is UART.
+
+CMSIS_5: https://github.com/ARM-software/CMSIS_5
+nRF9160_SDK: https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download#infotabs
+GNU ARM toolchain: https://developer.arm.com/toolsand-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm
+
+
+
+
 # Pairings in C
 
 [![Build Status](https://travis-ci.org/IAIK/pairings_in_c.svg?branch=develop)](https://travis-ci.org/IAIK/pairings_in_c)
 [![codecov](https://codecov.io/gh/IAIK/pairings_in_c/branch/develop/graph/badge.svg)](https://codecov.io/gh/IAIK/pairings_in_c)
-
-## NOTE!
-This version is forked from the original pairings_in_c project, modified to support Cortex-m33 (optimized 64-bit multiplication).
-Contains linker scripts and cmake files for bare-metal implementation for nRF9160. Requires ARM CMSIS_5 (Cortex Microcontroller Software Interface Standard) and nRF SDK (see links below).
-
-By default, the current setup runs the cycle/cache miss benchmarks for the o-ate pairing and different subfunctions (curve point, field extension arithmetic, etc). For building and benchmarking on nRF9160, modify SDK and CMSIS paths and versions on the nrf9160-app-init-build script. See framework/src/arch/nrf9160/board_init.c. Cache profiling is on by default, the flags locate in the corresponding board_init.c and /framework/include/util.h. 
-
-CMSIS_5: https://github.com/ARM-software/CMSIS_5
-nRF9160_SDK: https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download#infotabs
-
-## 
 This repository contains a C library for pairing-based cryptography which was part of results published at CHES 2014 [4]. It supports bilinear pairings based on 160-bit and 254-bit Barreto-Naehrig elliptic curves.
 
 ## Directory Structure
