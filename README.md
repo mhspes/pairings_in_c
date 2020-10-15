@@ -4,13 +4,13 @@ This version is forked from the original pairings_in_c project, modified to supp
 
 By default, the current setup runs the cycle/cache miss benchmarks for the optimal ate pairing and different subfunctions (curve point, field extension arithmetic, etc). Cache profiling is on by default, the flags locate in framework/src/arch/nrf9160/board_init.c and /framework/include/util.h. 
 
-Building: use the bash script nrf9160-app-init-build. Modify SDK, CMSIS and GCC ARM toolchain versions and paths on the script.
-Flashing: nrfjprog --program build/bench.hex -f NRF91  --sectorerase
-Traces can be read from any terminal, the used baud rate is 115200 and serial line is UART.
+Building: use the bash script nrf9160-app-init-build. Modify SDK, CMSIS and GCC ARM toolchain versions and paths on the script.  
+Flashing: nrfjprog --program build/bench.hex -f NRF91  --sectorerase  
+Traces can be read from any terminal, the used baud rate is 115200 and serial line is UART.  
 
-CMSIS_5: https://github.com/ARM-software/CMSIS_5
-nRF9160_SDK: https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download#infotabs
-GNU ARM toolchain: https://developer.arm.com/toolsand-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm
+CMSIS_5: https://github.com/ARM-software/CMSIS_5  
+nRF9160_SDK: https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download#infotabs  
+GNU ARM toolchain: https://developer.arm.com/toolsand-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm  
 
 
 
