@@ -10,10 +10,7 @@ Traces can be read from any terminal, the used baud rate is 115200 and serial li
 
 CMSIS_5: https://github.com/ARM-software/CMSIS_5  
 nRF9160_SDK: https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK/Download#infotabs  
-GNU ARM toolchain: https://developer.arm.com/toolsand-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm  
-
-
-
+GNU ARM toolchain: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads
 
 # Pairings in C
 
